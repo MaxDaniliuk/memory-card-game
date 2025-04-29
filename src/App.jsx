@@ -6,6 +6,14 @@ import './App.css';
 function App() {
   const [cardsList, setCardsList] = useState(createCardList());
   const [clickedCardIds, setClickedCardIds] = useState(new Set());
+  const [cardsNumber, setCardsNumber] = useState(5);
+
+  function changeCardsNumber({ target }) {
+    if (cardsList.length !== Number(target.value)) {
+      setCardsNumber(target.value);
+      setCardsList([...createCardList(target.value)]);
+    }
+  }
 
   function handleCardClick(card) {
     setCardsList(shuffleCards([...cardsList]));
@@ -23,7 +31,11 @@ function App() {
   }
   return (
     <div className="app">
-      <Header clickedCardIds={clickedCardIds} />
+      <Header
+        clickedCardIds={clickedCardIds}
+        onChange={changeCardsNumber}
+        cardsNum={cardsNumber}
+      />
       <CardsContainer cardsList={cardsList} handleCardClick={handleCardClick} />
       <footer>
         <>

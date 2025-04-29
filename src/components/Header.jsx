@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function Header({ clickedCardIds }) {
+export default function Header({ clickedCardIds, cardsNum, onChange }) {
   const [bestScore, setBestScore] = useState(0);
   const prevScoreRef = useRef(0);
 
@@ -27,6 +27,13 @@ export default function Header({ clickedCardIds }) {
       <div className="score-info-block">
         <span className="sc">Score: {clickedCardIds.size} </span>
         <span className="sc">Best score: {bestScore}</span>
+        <input
+          type="range"
+          min="5"
+          max="12"
+          onChange={e => onChange(e)}
+          value={cardsNum}
+        />
       </div>
     </header>
   );
