@@ -1,34 +1,30 @@
+import { useState } from 'react';
 import Header from './components/Header';
 import CardsContainer from './components/CardsContainer';
 import './App.css';
 
 function App() {
-  const cardsList = [
-    {
-      id: 1,
-      title: 'One',
-      clicked: false,
-    },
-    {
-      id: 2,
-      title: 'Two',
-      clicked: false,
-    },
-    {
-      id: 3,
-      title: 'Three',
-      clicked: false,
-    },
-    {
-      id: 4,
-      title: 'Four',
-      clicked: false,
-    },
-  ];
+  const [cardsList, setCardsList] = useState(createCardList());
+  const [clickedCardIds, setClickedCardIds] = useState(new Set());
+
+  function handleCardClick(card) {
+    setCardsList(shuffleCards([...cardsList]));
+    markClickedCard(card);
+  }
+
+  function markClickedCard(card) {
+    if (clickedCardIds.has(card.id)) {
+      setClickedCardIds(new Set());
+    } else {
+      const newSet = new Set(clickedCardIds);
+      newSet.add(card.id);
+      setClickedCardIds(newSet);
+    }
+  }
   return (
     <div className="app">
-      <Header />
-      <CardsContainer cardsList={cardsList} />
+      <Header clickedCardIds={clickedCardIds} />
+      <CardsContainer cardsList={cardsList} handleCardClick={handleCardClick} />
       <footer>
         <>
           © {new Date().getFullYear()}{' '}
@@ -46,3 +42,35 @@ function App() {
 }
 
 export default App;
+
+function createCardList(cardNum = 5) {
+  const link = 'https://pokeapi.co/api/v2/pokemon/';
+  const cardsList = [];
+
+  for (let i = 0; i < cardNum; i++) {
+    const pokemonId = Math.floor(Math.random() * 1025) + 1;
+    cardsList.push({
+      id: pokemonId,
+      link: link + `${pokemonId}`,
+      clicked: false,
+    });
+  }
+
+  return cardsList;
+}
+
+function shuffleCards(array) {
+  let currentIndex = array.length;
+
+  while (currentIndex != 0) {
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+}
