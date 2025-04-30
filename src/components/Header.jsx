@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function Header({ clickedCardIds, cardsNum, onChange }) {
+export default function Header({ clickedCardIds, onChange }) {
   const [bestScore, setBestScore] = useState(0);
   const prevScoreRef = useRef(0);
+  const [cardsNumber, setCardsNumber] = useState(5);
 
   useEffect(() => {
     if (clickedCardIds.size === 0) {
@@ -31,8 +32,17 @@ export default function Header({ clickedCardIds, cardsNum, onChange }) {
           type="range"
           min="5"
           max="12"
-          onChange={e => onChange(e)}
-          value={cardsNum}
+          value={cardsNumber}
+          onChange={e => {
+            setCardsNumber(e.target.value);
+          }}
+          onMouseUp={() => {
+            const changed = onChange(cardsNumber);
+            if (changed) {
+              prevScoreRef.current = 0;
+              setBestScore(0);
+            }
+          }}
         />
       </div>
     </header>

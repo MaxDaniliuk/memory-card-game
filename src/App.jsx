@@ -6,13 +6,14 @@ import './App.css';
 function App() {
   const [cardsList, setCardsList] = useState(createCardList());
   const [clickedCardIds, setClickedCardIds] = useState(new Set());
-  const [cardsNumber, setCardsNumber] = useState(5);
 
-  function changeCardsNumber({ target }) {
-    if (cardsList.length !== Number(target.value)) {
-      setCardsNumber(target.value);
-      setCardsList([...createCardList(target.value)]);
+  function changeCardsNumber(targetValue) {
+    if (cardsList.length !== Number(targetValue)) {
+      setCardsList([...createCardList(targetValue)]);
+      setClickedCardIds(new Set());
+      return true;
     }
+    return false;
   }
 
   function handleCardClick(card) {
@@ -34,7 +35,7 @@ function App() {
       <Header
         clickedCardIds={clickedCardIds}
         onChange={changeCardsNumber}
-        cardsNum={cardsNumber}
+        // cardsNum={cardsNumber}
       />
       <CardsContainer cardsList={cardsList} handleCardClick={handleCardClick} />
       <footer>
