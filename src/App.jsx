@@ -100,14 +100,19 @@ export default App;
 function createCardList(cardNum = 5) {
   const link = 'https://pokeapi.co/api/v2/pokemon/';
   const cardsList = [];
+  const usedIds = new Set();
 
-  for (let i = 0; i < cardNum; i++) {
+  while (cardsList.length < cardNum) {
     const pokemonId = Math.floor(Math.random() * 1025) + 1;
-    cardsList.push({
-      id: pokemonId,
-      link: link + `${pokemonId}`,
-      clicked: false,
-    });
+
+    if (!usedIds.has(pokemonId)) {
+      usedIds.add(pokemonId);
+      cardsList.push({
+        id: pokemonId,
+        link: link + `${pokemonId}`,
+        clicked: false,
+      });
+    }
   }
 
   return cardsList;
