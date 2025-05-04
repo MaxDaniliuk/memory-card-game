@@ -17,18 +17,19 @@ export default function Header({ clickedCardIds, onChange }) {
   }, [clickedCardIds, bestScore]);
 
   return (
-    <header>
+    <header className="p-[1em] flex flex-col justify-between mb-[clamp(3em,5vw,5em)] md:flex-row gap-[3vw]">
       <div>
-        <h1>Memory Card Game</h1>
-        <p>
+        <h1 className="font-x">Memory Card Game</h1>
+        <p className="pt-[1em] max-w-[35ch]">
           Get points by clicking on an image but don't click on any more than
           once!
         </p>
       </div>
-      <div className="score-info-block">
-        <span className="sc">Score: {clickedCardIds.size} </span>
-        <span className="sc">Best score: {bestScore}</span>
+      <div className="*:block *:mb-[0.5em] flex flex-col self-center justify-center md:shrink-0">
+        <p>Score: {clickedCardIds.size} </p>
+        <p>Best score: {bestScore}</p>
         <input
+          className="last:mb-[0em] last:mt-[0.5em] appearance-none cursor-pointer bg-[#efb100] rounded-lg h-1 md:h-2 2xl:h-3 "
           type="range"
           min="5"
           max="12"

@@ -27,7 +27,10 @@ export default function Card({ link, onClick }) {
   }, [link]);
 
   return (
-    <div className="card" onClick={onClick}>
+    <div
+      className="card-size bg-yellow-800 cursor-pointer rounded-[10px] shadow-[0_0_15px_8px_#efb100] hover:scale-125"
+      onClick={onClick}
+    >
       {imageUrl ? (
         <img
           src={imageUrl}
